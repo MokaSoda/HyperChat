@@ -60,6 +60,30 @@ export const isAllEmoji = (a: Chat.MessageAction): boolean =>
   a.message.message.length !== 0 &&
   a.message.message.every(m => m.type === 'emoji' || (m.type === 'text' && m.text.trim() === ''));
 
+export const isLang = (a: Chat.MessageAction): boolean => {
+  let result;
+  let text_compiled = ""
+  let array_result = [];
+  // console.log(a.message.message)
+  for (const payload of a.message.message){
+    if (payload['type'] == 'text'){
+      text_compiled += payload['text'];
+    }
+  }
+  // console.log(text_compiled)
+  // return false
+  chrome.i18n.detectLanguage(text_compiled, tmp_test => result = tmp_test);
+  for (const langstr of Object.values(result)[1]) {
+      // console.log(langstr);
+      array_result.push(langstr['language']);
+  }
+  if (array_result.includes('ko')) {
+      return true;
+  } else {
+      return false;
+  }
+}
+  
 export const checkInjected = (error: string): boolean => {
   if (document.querySelector('#hc-buttons')) {
     console.error(error);

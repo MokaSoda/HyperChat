@@ -2,6 +2,7 @@
   import {
     theme,
     showOnlyMemberChat,
+    blockCertainLanguage,
     showProfileIcons,
     showTimestamps,
     showUsernames,
@@ -71,6 +72,7 @@
 <Card title="Filters" icon="filter_list">
   <i>{willChangeOnNextChunkMessage}</i>
   <Checkbox name="Show only member chat messages" store={showOnlyMemberChat} />
+  <Checkbox name="Block Certain Language" store={blockCertainLanguage} />
 </Card>
 
 <Card title="Additional Options" icon="tune">

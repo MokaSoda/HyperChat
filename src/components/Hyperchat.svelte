@@ -26,6 +26,7 @@
   } from '../ts/chat-constants';
   import {
     isAllEmoji,
+    isLang,
     isChatMessage,
     isPrivileged,
     responseIsAction,
@@ -35,6 +36,7 @@
   import {
     theme,
     showOnlyMemberChat,
+    blockCertainLanguage,
     showProfileIcons,
     showUsernames,
     showTimestamps,
@@ -71,6 +73,7 @@
   let pinned: Ytc.ParsedPinned | null;
   let div: HTMLElement;
   let isAtBottom = true;
+  let isCertainLang = false;
   let truncateInterval: number;
   const isReplay = paramsIsReplay;
   const smelteDark = dark();
@@ -79,6 +82,10 @@
 
   const memberOnlyBlocker: MessageBlocker = (a) => (
     $showOnlyMemberChat && isChatMessage(a) && !isPrivileged(a.message.author.types)
+  );
+
+  const blockOnlyLanguage: MessageBlocker = (a) => (
+    $blockCertainLanguage && isChatMessage(a) && isLang(a)
   );
 
   const emojiSpamBlocker: MessageBlocker = (a) => (
@@ -93,7 +100,7 @@
     return result;
   };
 
-  const messageBlockers = [memberOnlyBlocker, emojiSpamBlocker, duplicateKeyBlocker];
+  const messageBlockers = [memberOnlyBlocker, blockOnlyLanguage, emojiSpamBlocker, duplicateKeyBlocker];
 
   const shouldShowMessage = (m: Chat.MessageAction): boolean => (
     !messageBlockers.some(blocker => blocker(m))
