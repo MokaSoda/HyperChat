@@ -72,7 +72,12 @@ export const isLang = (a: Chat.MessageAction, isalsouser: boolean): boolean => {
     }
   }
   if (isalsouser){
-    text_compiled += a.message.author.name
+    let result_user
+    chrome.i18n.detectLanguage(a.message.author.name, tmp_test => result_user = tmp_test);
+    for (const langstr of Object.values(result)[1]) {
+      // console.log(langstr);
+      array_result.push(langstr['language']);
+    }
   }
   // console.log(text_compiled)
   // return false
