@@ -65,6 +65,7 @@ export const isLang = (a: Chat.MessageAction): boolean => {
   let text_compiled = ""
   let array_result = [];
   // console.log(a.message.message)
+  console.log(a)
   for (const payload of a.message.message){
     if (payload['type'] == 'text'){
       text_compiled += payload['text'];
