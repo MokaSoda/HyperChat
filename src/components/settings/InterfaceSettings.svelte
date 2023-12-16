@@ -3,6 +3,7 @@
     theme,
     showOnlyMemberChat,
     blockCertainLanguage,
+    blockCertainLanguage_user,
     showProfileIcons,
     showTimestamps,
     showUsernames,
@@ -73,6 +74,7 @@
   <i>{willChangeOnNextChunkMessage}</i>
   <Checkbox name="Show only member chat messages" store={showOnlyMemberChat} />
   <Checkbox name="Block Certain Language" store={blockCertainLanguage} />
+  <Checkbox name="Block Certain Language in Username" store={blockCertainLanguage_user} />
 </Card>
 
 <Card title="Additional Options" icon="tune">

@@ -60,7 +60,7 @@ export const isAllEmoji = (a: Chat.MessageAction): boolean =>
   a.message.message.length !== 0 &&
   a.message.message.every(m => m.type === 'emoji' || (m.type === 'text' && m.text.trim() === ''));
 
-export const isLang = (a: Chat.MessageAction): boolean => {
+export const isLang = (a: Chat.MessageAction, isalsouser: boolean): boolean => {
   let result;
   let text_compiled = ""
   let array_result = [];
@@ -70,6 +70,9 @@ export const isLang = (a: Chat.MessageAction): boolean => {
     if (payload['type'] == 'text'){
       text_compiled += payload['text'];
     }
+  }
+  if (isalsouser){
+    text_compiled += a.message.author.name
   }
   // console.log(text_compiled)
   // return false
