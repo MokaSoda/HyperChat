@@ -39,6 +39,7 @@
     blockCertainLanguage,
     blockCertainLanguage_user,
     blockCertainLanguage_user_aggressive,
+    blockCertainLanguage_aggressive,
     showProfileIcons,
     showUsernames,
     showTimestamps,
@@ -87,7 +88,7 @@
   );
 
   const blockOnlyLanguage: MessageBlocker = (a) => (
-    $blockCertainLanguage && isChatMessage(a) && isLang(a, $blockCertainLanguage_user, $blockCertainLanguage_user_aggressive)
+    $blockCertainLanguage && isChatMessage(a) && isLang(a, $blockCertainLanguage_user, $blockCertainLanguage_user_aggressive, $blockCertainLanguage_aggressive)
   );
 
   const emojiSpamBlocker: MessageBlocker = (a) => (

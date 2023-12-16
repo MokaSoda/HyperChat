@@ -60,7 +60,7 @@ export const isAllEmoji = (a: Chat.MessageAction): boolean =>
   a.message.message.length !== 0 &&
   a.message.message.every(m => m.type === 'emoji' || (m.type === 'text' && m.text.trim() === ''));
 
-export const isLang = (a: Chat.MessageAction, isalsouser: boolean, isalsouser_aggressive: boolean): boolean => {
+export const isLang = (a: Chat.MessageAction, isalsouser: boolean, isalsouser_aggressive: boolean, ischataggressive: boolean): boolean => {
   let result;
   let text_compiled = ""
   let array_result = [];
@@ -83,7 +83,7 @@ export const isLang = (a: Chat.MessageAction, isalsouser: boolean, isalsouser_ag
   }
   }
 
-  if (isalsouser && !isalsouser_aggressive){
+  else (isalsouser && !isalsouser_aggressive){
     let result_user;
     chrome.i18n.detectLanguage(a.message.author.name, tmp_test => result_user = tmp_test);
     for (const langstr of Object.values(result_user)[1]) {
@@ -91,19 +91,34 @@ export const isLang = (a: Chat.MessageAction, isalsouser: boolean, isalsouser_ag
       array_result.push(langstr['language']);
     }
   }
+  
+  if (ischataggressive){
+    let array_message = [...text_compiled];
+    for (const message_char of array_message){
+      chrome.i18n.detectLanguage(message_char, tmp_test => result = tmp_test);
+      for (const langstr of Object.values(result)[1]) {
+        // console.log(langstr);
+        array_result.push(langstr['language']);
+      }
+    }
+  }
 
+  else{
+    chrome.i18n.detectLanguage(text_compiled, tmp_test => result = tmp_test);
+    for (const langstr of Object.values(result)[1]) {
+        // console.log(langstr);
+        array_result.push(langstr['language']);
+    }
+  }
   // console.log(text_compiled)
   // return false
-  chrome.i18n.detectLanguage(text_compiled, tmp_test => result = tmp_test);
-  for (const langstr of Object.values(result)[1]) {
-      // console.log(langstr);
-      array_result.push(langstr['language']);
-  }
+  
   if (array_result.includes('ko')) {
       return true;
   } else {
       return false;
   }
+
 }
   
 export const checkInjected = (error: string): boolean => {

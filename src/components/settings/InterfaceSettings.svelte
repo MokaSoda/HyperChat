@@ -3,6 +3,7 @@
     theme,
     showOnlyMemberChat,
     blockCertainLanguage,
+    blockCertainLanguage_aggressive,
     blockCertainLanguage_user,
     blockCertainLanguage_user_aggressive,
     showProfileIcons,
@@ -76,6 +77,7 @@
   <Checkbox name="Show only member chat messages" store={showOnlyMemberChat} />
   <Checkbox name="Block Certain Language" store={blockCertainLanguage} />
   {#if ($blockCertainLanguage)}
+  <Checkbox name="Block Certain Language Aggressively" store={blockCertainLanguage_aggressive} />
   <Checkbox name="Block Certain Language in Username" store={blockCertainLanguage_user} />
   <Checkbox name="Block Certain Language in Username Aggressively" store={blockCertainLanguage_user_aggressive} />
   {/if}
