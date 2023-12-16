@@ -112,16 +112,16 @@ export const isLang = (a: Chat.MessageAction, isalsouser: boolean, isalsouser_ag
   }
   // console.log(text_compiled)
   // return false
-  // let language_array = ['ko','zh-CN'];
-  // let result_lang_det = [];
-  // for (const langcode in language_array){
-  //   result_lang_det.push(array_result.includes(langcode));
-  // }
-  // let sum_boolean = result_lang_det.reduce((accumulator, currentValue) => {
-  //   return accumulator + currentValue;
-  // },0);
+  let language_array = ['ko','zh-CN'];
+  let result_lang_det = [];
+  for (const langcode of language_array){
+    result_lang_det.push(array_result.includes(langcode));
+  }
+  let sum_boolean = result_lang_det.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue;
+  },0);
 
-  if (array_result.includes('ko')) {
+  if (sum_boolean) {
       return true;
   } else {
       return false;
