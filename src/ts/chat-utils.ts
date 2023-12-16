@@ -113,7 +113,7 @@ export const isLang = (a: Chat.MessageAction, isalsouser: boolean, isalsouser_ag
   // console.log(text_compiled)
   // return false
   let language_array = ['ko','zh-CN'];
-  let result_lang_det = [true, true, true];
+  let result_lang_det = [];
   for (const langcode in language_array){
     result_lang_det.push(array_result.includes(langcode));
   }
