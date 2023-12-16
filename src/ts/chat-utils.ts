@@ -60,7 +60,7 @@ export const isAllEmoji = (a: Chat.MessageAction): boolean =>
   a.message.message.length !== 0 &&
   a.message.message.every(m => m.type === 'emoji' || (m.type === 'text' && m.text.trim() === ''));
 
-export const isLang = (a: Chat.MessageAction, isalsouser: boolean): boolean => {
+export const isLang = (a: Chat.MessageAction, isalsouser: boolean, isalsouser_aggressive: boolean): boolean => {
   let result;
   let text_compiled = ""
   let array_result = [];
@@ -71,14 +71,27 @@ export const isLang = (a: Chat.MessageAction, isalsouser: boolean): boolean => {
       text_compiled += payload['text'];
     }
   }
-  if (isalsouser){
+  if (isalsouser && isalsouser_aggressive){
+    let result_user;
+    let array_user = [...a.message.author.name];
+    for (const langchar of array_user){
+      chrome.i18n.detectLanguage(langchar, tmp_test => result_user = tmp_test);
+      for (const langstr of Object.values(result_user)[1]) {
+        // console.log(langstr);
+        array_result.push(langstr['language']);
+    }
+  }
+  }
+
+  if (isalsouser && !isalsouser_aggressive){
     let result_user;
     chrome.i18n.detectLanguage(a.message.author.name, tmp_test => result_user = tmp_test);
     for (const langstr of Object.values(result_user)[1]) {
       // console.log(langstr);
       array_result.push(langstr['language']);
+    }
   }
-  }
+
   // console.log(text_compiled)
   // return false
   chrome.i18n.detectLanguage(text_compiled, tmp_test => result = tmp_test);
